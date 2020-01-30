@@ -1,7 +1,14 @@
 import React from 'react';
+import MoreInfo from './MoreInfo';
 
 
 export default class HogCard extends React.Component {
+    constructor(){
+        super()
+        this.state = {
+            moreInfoBool: false
+        }
+    }
 
     heartBoi = (e) => {
         if (e.target.innerText === '♡'){
@@ -20,6 +27,14 @@ export default class HogCard extends React.Component {
         return slugged
     }
 
+    moreInfoToggle = () => {
+        this.setState(prevState => {
+            return {
+                moreInfoBool: !prevState.moreInfoBool
+            }
+        })
+    }
+
     generateHog = () => {
         return(
             <div className="ui card">
@@ -33,8 +48,9 @@ export default class HogCard extends React.Component {
                 </div>
                 <div className="content">
                     <p>Specialty: {this.props.hogData.specialty}</p>
-                    <button>More Info</button><button>Hide Me</button>
+                    <button onClick={this.moreInfoToggle}>More Info</button><button>Hide Me</button>
                 </div>
+                { this.state.moreInfoBool ? <MoreInfo hogsData={this.props.hogData} /> : null}
                 <div className="extra content">
                     <p onClick={this.heartBoi}>♡</p>
                 </div>
